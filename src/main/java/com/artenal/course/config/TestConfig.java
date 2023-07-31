@@ -1,10 +1,8 @@
 package com.artenal.course.config;
 
-import com.artenal.course.entities.Order;
-import com.artenal.course.entities.User;
+import com.artenal.course.entities.*;
 import com.artenal.course.entities.enums.OrderStatus;
-import com.artenal.course.repositories.OrderRepository;
-import com.artenal.course.repositories.UserRepository;
+import com.artenal.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +19,15 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
 
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "96966696", "123456");
         User u2 = new User(null, "Ernando Blum", "ernando@gmail.com", "96555588", "188856");
@@ -32,6 +36,7 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2023-07-27T22:36:57Z"), u2, OrderStatus.PAID);
         Order o3 = new Order(null, Instant.parse("2014-12-12T00:00:00Z"), u1, OrderStatus.PAID);
 
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
     }
